@@ -12,8 +12,6 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 require_once 'config.php';
 $eredmeny = mysqli_query($link,"SELECT name FROM category"); //kategóriák lekérdezése
 $username = $_SESSION['username'];
-$ask_role = mysqli_query($link, "SELECT role FROM users WHERE username='".$username."'");//Ask the role of the user
-$role = mysqli_fetch_array($ask_role);
 ?>
 
 <!DOCTYPE html>
@@ -39,14 +37,12 @@ $role = mysqli_fetch_array($ask_role);
                 <ul class="list-group">
                     <li class="list-group-item justify-content-between">
                         <?=$row['name']?>
-                        <?php if($role == 'S') { ?>
                         <span class="badge badge-default badge-pill">
                             <form action='deleteCategory.php?name="<?php echo $row['name'] ?>"' method="post">
                                 <input type="hidden" name="name" value="<?php echo $row['name']; ?>">
                                 <input type="submit" name="submit" class="btn-danger" value="Delete">
                             </form>
                         </span>
-                        <?php } ?>
                     </li>
                 </ul>
             <?php endwhile; ?>
