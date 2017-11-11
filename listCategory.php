@@ -8,6 +8,8 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     exit;
 }
 
+include_once 'permissionDenied.php';
+
 // Include config file
 require_once 'config.php';
 $eredmeny = mysqli_query($link,"SELECT name FROM category"); //kategóriák lekérdezése
