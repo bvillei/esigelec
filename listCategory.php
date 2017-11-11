@@ -8,8 +8,6 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     exit;
 }
 
-include_once 'permissionDenied.php';
-
 // Include config file
 require_once 'config.php';
 $eredmeny = mysqli_query($link,"SELECT name FROM category"); //kategóriák lekérdezése
@@ -39,12 +37,14 @@ $username = $_SESSION['username'];
                 <ul class="list-group">
                     <li class="list-group-item justify-content-between">
                         <?=$row['name']?>
-                        <span class="badge badge-default badge-pill">
-                            <form action='deleteCategory.php?name="<?php echo $row['name'] ?>"' method="post">
-                                <input type="hidden" name="name" value="<?php echo $row['name']; ?>">
-                                <input type="submit" name="submit" class="btn-danger" value="Delete">
-                            </form>
-                        </span>
+                        <?php if($_SESSION['admin'] != 1){ ?>
+                            <span class="badge badge-default badge-pill">
+                                <form action='deleteCategory.php?name="<?php echo $row['name'] ?>"' method="post">
+                                    <input type="hidden" name="name" value="<?php echo $row['name']; ?>">
+                                    <input type="submit" name="submit" class="btn-danger" value="Delete">
+                                </form>
+                            </span>
+                        <?php } ?>
                     </li>
                 </ul>
             <?php endwhile; ?>
