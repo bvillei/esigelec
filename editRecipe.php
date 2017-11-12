@@ -16,7 +16,8 @@ if(isset($_POST['Add'])){ //új recept felvétele
     $ingredients = mysqli_real_escape_string($link,$_POST['ingredients']);
     $description = mysqli_real_escape_string($link,$_POST['description']);
     $category_id = mysqli_real_escape_string($link,$_POST['category_id']);
-    $query = "INSERT INTO recipe (name, ingredients, description, category_id)" . "values ('$name','$ingredients','$description','$category_id')"; //beszúrás a receptek közé
+    $user_id = $_SESSION['id'];
+    $query = "INSERT INTO recipe (name, ingredients, description, category_id, user_id)" . "values ('$name','$ingredients','$description','$category_id','$user_id')"; //beszúrás a receptek közé
     mysqli_query($link, $query);
     mysqli_close($link);
     header("Location: listRecipe.php");
