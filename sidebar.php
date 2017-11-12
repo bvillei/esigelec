@@ -5,5 +5,4 @@
     <p><a href="listRecipe.php">Display Recipe</a></p>
     <p><a href="editCategory.php">Add Category</a></p>
     <p><a href="listCategory.php">Display Categories</a></p>
-    <p><a href="editRecip.php">Edit Recipe</a></p>
 </div>

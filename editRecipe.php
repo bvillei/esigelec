@@ -58,7 +58,7 @@ if(isset($_POST['Add'])){ //új recept felvétele
                         <textarea class="form-control" rows="5" id="description" placeholder="Give the description of the recipe" name="description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="category">Categories:</label>
+                        <label for="category">Category:</label>
                         <?php
 
                         require_once 'config.php';
@@ -83,7 +83,7 @@ if(isset($_POST['Add'])){ //új recept felvétele
     </div>
 </div>
 
-<?php //include('footer.php'); ?>
+<?php include('footer.php'); ?>
 
 </body>
 </html>

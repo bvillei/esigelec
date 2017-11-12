@@ -63,7 +63,7 @@ if(isset($_POST['Update'])){ //új recept felvétele
                     <input class="form-control" id="description" placeholder="Give the description of the recipe" name="description" value="<?=$row["description"]?>">
                 </div>
                 <div class="form-group">
-                    <label for="category">Categories:</label>
+                    <label for="category">Category:</label>
                     <?php
 
                     require_once 'config.php';
@@ -88,7 +88,7 @@ if(isset($_POST['Update'])){ //új recept felvétele
     </div>
 </div>
 
-<?php //include('footer.php'); ?>
+<?php include('footer.php'); ?>
 
 </body>
 </html>
