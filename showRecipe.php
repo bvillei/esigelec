@@ -51,6 +51,7 @@ $row = mysqli_fetch_assoc($recipe);
                 </form>
             </td>
 
+            <a href="editRecip.php?param=<?=$name?>">UPDATE</li></a>
         </div>
     </div>
 </div>
