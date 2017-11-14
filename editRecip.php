@@ -20,9 +20,7 @@ if(isset($_POST['Update'])){ //új recept felvétele
     $name = mysqli_real_escape_string($link,$_POST['name']);
     $ingredients = mysqli_real_escape_string($link,$_POST['ingredients']);
     $description = mysqli_real_escape_string($link,$_POST['description']);
-    $category_id = mysqli_real_escape_string($link,$_POST['category_id']);
-//    $query = "INSERT INTO recipe (name, ingredients, description, category_id)" . "values ('$name','$ingredients','$description','$category_id')"; //beszúrás a receptek közé
-    $query = "UPDATE recipe SET name='".$name."' WHERE name='".$URL_name."'"; //beszúrás a receptek közé
+    $category_id = mysqli_real_escape_string($link,$_POST['category_id']);$query = "UPDATE recipe SET name='$name', ingredients='$ingredients', description='$description' WHERE name='$URL_name'"; //beszúrás a receptek közé
     mysqli_query($link, $query);
     mysqli_close($link);
     header("Location: listRecipe.php");
@@ -32,7 +30,7 @@ if(isset($_POST['Update'])){ //új recept felvétele
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Recipe Edit</title>
+    <title>Update Recipe</title>
 
     <?php include('head.php'); ?>
 </head>
@@ -48,8 +46,10 @@ if(isset($_POST['Update'])){ //új recept felvétele
 
         <div class="col-sm-6 text-left">
 
-            <h2>Edit the Recipe</h2>
-            <form method="post" action="editRecip.php" onsubmit="alert('Successfully added');">
+            <h2>Update the Recipe</h2>
+
+<!--            <form method="post" action="editRecip.php" onsubmit="alert('Successfully added');">-->
+                <form method="post" action="editRecip.php?param=<?php echo $URL_name; ?>">
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" placeholder="Name of the recipe" name="name" value="<?=$row["recipe_name"]?>" required>
