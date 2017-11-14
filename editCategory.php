@@ -16,8 +16,8 @@ $URL_name = $_GET['param'];
 $category = mysqli_query($link,"SELECT name FROM category WHERE name='".$URL_name."'");
 $row = mysqli_fetch_array($category);
 
-// Update the selected category
-if(isset($_POST['Update'])){ //új recept felvétele
+// Edit the selected category
+if(isset($_POST['Update'])){
 
 // Include config file
     require_once 'config.php';

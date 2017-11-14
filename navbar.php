@@ -16,7 +16,7 @@
                         <li ><a href = "register.php" ><span class="glyphicon glyphicon-log-out" ></span > Register</a ></li >
                         <li><a href="login.php"><span class="glyphicon glyphicon-log-out"></span>Login</a></li>
 <!--                        If we are logged in then we see a logout button-->
-                    <?php }else{ ?>
+                    <?php } else { ?>
                     <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
                     <?php } ?>
                 </ul>

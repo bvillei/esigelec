@@ -10,9 +10,10 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 
 // Include config file
 require_once 'config.php';
-
-$name = $_GET['param']; //név lekérdezése URL-ből
-$recipe = mysqli_query($link,"SELECT recipe.name AS recipe_name, ingredients, description, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE recipe.name='".$name."'"); //kiválsztott recept
+// get the parameter from the URL
+$name = $_GET['param'];
+// get the recipe that has the name field corresponding to the parameter which one stored in the URL
+$recipe = mysqli_query($link,"SELECT recipe.name AS recipe_name, ingredients, description, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE recipe.name='".$name."'");
 $row = mysqli_fetch_assoc($recipe);
 
 ?>
@@ -20,6 +21,7 @@ $row = mysqli_fetch_assoc($recipe);
 <!DOCTYPE html>
 <html>
 <head>
+<!--    We use the recipe name as a title on this page-->
     <title><?=$row["recipe_name"]?></title>
     <?php include('head.php'); ?>
 </head>
@@ -44,6 +46,7 @@ $row = mysqli_fetch_assoc($recipe);
 
             <p><i>How to make it: </i><br/> <?=$row["description"]?></p>
 
+<!--            Delete function. If we click on the delete button, then the shown recipe will be deleted from the database-->
             <td class="contact-delete">
                 <form action='deleteRecipe.php?name="<?php echo $row['recipe_name'] ?>"' method="post">
                     <input type="hidden" name="name" value="<?php echo $row['recipe_name']; ?>">
@@ -51,7 +54,8 @@ $row = mysqli_fetch_assoc($recipe);
                 </form>
             </td>
 
-            <a class="btn btn-primary" href="editRecipe.php?param=<?=$name?>">UPDATE</li></a>
+<!--            Edit button. If we click on the Edit button, then we go to the edit page of the recipe-->
+            <a class="btn btn-primary" href="editRecipe.php?param=<?=$name?>">EDIT</li></a>
         </div>
     </div>
 </div>

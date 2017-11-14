@@ -21,7 +21,7 @@ if(isset($_POST['Add'])){ //új recept felvétele
 // Get the user id from the session
     $user_id = $_SESSION['id'];
 // Add the new recipe to the database
-    $query = "INSERT INTO recipe (name, ingredients, description, category_id, user_id)" . "values ('$name','$ingredients','$description','$category_id','$user_id')"; //beszúrás a receptek közé
+    $query = "INSERT INTO recipe (name, ingredients, description, category_id, user_id)" . "values ('$name','$ingredients','$description','$category_id','$user_id')";
     mysqli_query($link, $query);
 // Close the connection
     mysqli_close($link);

@@ -11,7 +11,7 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 // Include config file
 require_once 'config.php';
 // Get all the category
-$eredmeny = mysqli_query($link,"SELECT name FROM category");
+$query = mysqli_query($link,"SELECT name FROM category");
 $username = $_SESSION['username'];
 ?>
 
@@ -34,7 +34,7 @@ $username = $_SESSION['username'];
         <div class="col-sm-5 text-left">
 
             <h1>List of the Categories:</h1>
-            <?php while($row = mysqli_fetch_array($eredmeny)): ?>
+            <?php while($row = mysqli_fetch_array($query)): ?>
                 <ul class="list-group">
                     <li class="list-group-item justify-content-between">
 <!--                        If we have admin role, then we can click on the categories, and go to the edit page of the category-->

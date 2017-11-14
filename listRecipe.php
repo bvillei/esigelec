@@ -10,14 +10,15 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 
 // Include config file
 require_once 'config.php';
-// Basically we use all the characters, so we get all the recipes
+// Basically we use the '%' operator, so we get all the recipes
 $category_name = '%';
 // Search engine
 if(isset($_POST['Search'])){
-    // If we
+    // If we searched for a category, then we change the category_name to the searched category
     $category_name = mysqli_real_escape_string($link, $_POST['category_id']);
 }
-$eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE category.name LIKE '$category_name' ");
+// We get the recipes with the searched category
+$query = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE category.name LIKE '$category_name' ");
 ?>
 
 <!DOCTYPE html>
@@ -45,13 +46,17 @@ $eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, 
                     <label for="category">Category:</label>
                     <?php
 
+                    // Include config file
                     require_once 'config.php';
+                    // Get all the categories from the database
                     $result = $link->query("select * from category");
 
                     echo "<select class='form-control' id='category_id' name='category_id'>";
 
+                    // ALL RECIPE category, if we want to change back to all the recipes. (We do a search with a '%' operator)
                     echo "<option value='%'>ALL RECIPE</option>";
 
+                    // Show the categories as a drop-down list
                     while ($row = $result->fetch_assoc()) {
                         unset($name);
                         $name = $row['name'];
@@ -66,15 +71,19 @@ $eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, 
             <br/>
 
             <label for="list">Recipes:</label>
-            <?php while($sor = mysqli_fetch_array($eredmeny)): ?>
+<!--            Write in a list the recipes-->
+            <?php while($row = mysqli_fetch_array($query)): ?>
                 <ul class="list-group">
-                    <a href="showRecipe.php?param=<?=$sor['recipe_name']?>"><li class="list-group-item list-group-item-action"><?=$sor['recipe_name']?></li></a>
+<!--                    All the recipes in the list are links, if we click on that, then we can go to the deatils page of the recipe.-->
+                    <a href="showRecipe.php?param=<?=$row['recipe_name']?>"><li class="list-group-item list-group-item-action"><?=$row['recipe_name']?></li></a>
                 </ul>
             <?php endwhile; ?>
             <?php
+            // Close the conncetion
             mysqli_close($link);
             ?>
 
+<!--            Add new recipe button, which one navigates us to the 'addRecipe.php' site-->
             <a href="addRecipe.php"><button type="button" class="btn btn-primary">Add New Recipe</button></a>
 
         </div>

@@ -16,8 +16,8 @@ $URL_name = $_GET['param'];
 $recipe = mysqli_query($link,"SELECT recipe.name AS recipe_name, ingredients, description, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE recipe.name='".$URL_name."'");
 $row = mysqli_fetch_array($recipe);
 
-// Update the selected category
-if(isset($_POST['Update'])){ //új recept felvétele
+// Edit the selected recipe
+if(isset($_POST['Update'])){
 
 // Include config file
     require_once 'config.php';
