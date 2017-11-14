@@ -10,11 +10,14 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 
 // Include config file
 require_once 'config.php';
+// Basically we use all the characters, so we get all the recipes
 $category_name = '%';
-if(isset($_POST['Search'])){  //keresés
+// Search engine
+if(isset($_POST['Search'])){
+    // If we
     $category_name = mysqli_real_escape_string($link, $_POST['category_id']);
 }
-$eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE category.name LIKE '$category_name' "); //receptek lekérdezése
+$eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE category.name LIKE '$category_name' ");
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +38,7 @@ $eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, 
 
         <div class="col-sm-5 text-left">
 
-            <h1>List of Recipes that you wish to edit:</h1>
+            <h1>List of the Recipes:</h1>
 
             <form method="post" action="listRecipe.php">
                 <div class="form-group">
@@ -62,6 +65,7 @@ $eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, 
 
             <br/>
 
+            <label for="list">Recipes:</label>
             <?php while($sor = mysqli_fetch_array($eredmeny)): ?>
                 <ul class="list-group">
                     <a href="showRecipe.php?param=<?=$sor['recipe_name']?>"><li class="list-group-item list-group-item-action"><?=$sor['recipe_name']?></li></a>

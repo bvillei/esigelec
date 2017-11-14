@@ -8,18 +8,24 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     exit;
 }
 
+//Add new recipe
 if(isset($_POST['Add'])){ //új recept felvétele
 
 // Include config file
     require_once 'config.php';
+// Get the data from the form
     $name = mysqli_real_escape_string($link,$_POST['name']);
     $ingredients = mysqli_real_escape_string($link,$_POST['ingredients']);
     $description = mysqli_real_escape_string($link,$_POST['description']);
     $category_id = mysqli_real_escape_string($link,$_POST['category_id']);
+// Get the user id from the session
     $user_id = $_SESSION['id'];
+// Add the new recipe to the database
     $query = "INSERT INTO recipe (name, ingredients, description, category_id, user_id)" . "values ('$name','$ingredients','$description','$category_id','$user_id')"; //beszúrás a receptek közé
     mysqli_query($link, $query);
+// Close the connection
     mysqli_close($link);
+// Navigate to the list page of recipes
     header("Location: listRecipe.php");
 }
 ?>
@@ -27,7 +33,7 @@ if(isset($_POST['Add'])){ //új recept felvétele
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Recipe Edit</title>
+    <title>Add Recipe</title>
 
     <?php include('head.php'); ?>
 </head>
@@ -43,7 +49,8 @@ if(isset($_POST['Add'])){ //új recept felvétele
 
         <div class="col-sm-6 text-left">
 
-                <h2>Edit the Recipe</h2>
+                <h2>Add new Recipe</h2>
+<!--            The form to add new recipe -->
                 <form method="post" action="addRecipe.php" onsubmit="alert('Successfully added');">
                     <div class="form-group">
                         <label for="name">Name:</label>
@@ -60,16 +67,19 @@ if(isset($_POST['Add'])){ //új recept felvétele
                     <div class="form-group">
                         <label for="category">Category:</label>
                         <?php
-
+                        // Include config file
                         require_once 'config.php';
+                        // Get all the categories from the database
                         $result = $link->query("select * from category");
 
                         echo "<select class='form-control' id='category_id' name='category_id'>";
 
+                        // Show the categories as a drop-down list
                         while ($row = $result->fetch_assoc()) {
                             unset($id, $name);
                             $id = $row['id'];
                             $name = $row['name'];
+                            // Show the name and store the id of the category
                             echo '<option value="'.$id.'">'.$name.'</option>';
                         }
 

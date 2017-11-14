@@ -22,9 +22,9 @@ if (mysqli_affected_rows($link) == 1) {
 
     <strong>Deletion Failed</strong><br /><br />
 
-
     <?php
 }
 
+// After 3 seconds it redirect us to the Category list page
 header( "refresh:3;url=listCategory.php" );
 ?>

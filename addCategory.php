@@ -8,14 +8,18 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     exit;
 }
 
-if(isset($_POST['Add'])){ //új recept felvétele
-
+//Add new category
+if(isset($_POST['Add'])){
 // Include config file
     require_once 'config.php';
+// Get the data from the form
     $name = mysqli_real_escape_string($link,$_POST['name']);
+// Add the new category to the database
     $query = "INSERT INTO category (name)" . "values ('$name')";
     mysqli_query($link, $query);
+// Close the connection
     mysqli_close($link);
+// Navigate to the list page of categories
     header("Location: listCategory.php");
 }
 ?>
@@ -24,7 +28,6 @@ if(isset($_POST['Add'])){ //új recept felvétele
 <html>
 <head>
     <title>Add category</title>
-
     <?php include('head.php'); ?>
 </head>
 <body>
@@ -40,6 +43,7 @@ if(isset($_POST['Add'])){ //új recept felvétele
         <div class="col-sm-6 text-left">
 
             <h2>Add New Category</h2>
+<!--            The form to add new category -->
             <form method="post" action="addCategory.php" onsubmit="alert('Successfully added');">
                 <div class="form-group">
                     <label for="name">name:</label>

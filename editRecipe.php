@@ -8,21 +8,30 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     exit;
 }
 
+// Include config file
 require_once 'config.php';
+//Get the name of the recipe from the URL
 $URL_name = $_GET['param'];
-$recipe = mysqli_query($link,"SELECT recipe.name AS recipe_name, ingredients, description, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE recipe.name='".$URL_name."'"); //kiválsztott recept
+// Get the recipe which name is in the URL
+$recipe = mysqli_query($link,"SELECT recipe.name AS recipe_name, ingredients, description, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE recipe.name='".$URL_name."'");
 $row = mysqli_fetch_array($recipe);
 
+// Update the selected category
 if(isset($_POST['Update'])){ //új recept felvétele
 
 // Include config file
     require_once 'config.php';
+// Get the data from the form
     $name = mysqli_real_escape_string($link,$_POST['name']);
     $ingredients = mysqli_real_escape_string($link,$_POST['ingredients']);
     $description = mysqli_real_escape_string($link,$_POST['description']);
-    $category_id = mysqli_real_escape_string($link,$_POST['category_id']);$query = "UPDATE recipe SET name='$name', ingredients='$ingredients', description='$description' WHERE name='$URL_name'"; //beszúrás a receptek közé
+    $category_id = mysqli_real_escape_string($link,$_POST['category_id']);
+// Edit the selected recipe data with an UPDATE query
+    $query = "UPDATE recipe SET name='$name', ingredients='$ingredients', description='$description' WHERE name='$URL_name'";
     mysqli_query($link, $query);
+// Close the connection
     mysqli_close($link);
+// Navigate to the list page of recipes
     header("Location: listRecipe.php");
 }
 ?>
@@ -31,7 +40,6 @@ if(isset($_POST['Update'])){ //új recept felvétele
 <html>
 <head>
     <title>Update Recipe</title>
-
     <?php include('head.php'); ?>
 </head>
 <body>
@@ -48,8 +56,9 @@ if(isset($_POST['Update'])){ //új recept felvétele
 
             <h2>Update the Recipe</h2>
 
-<!--            <form method="post" action="editRecip.php" onsubmit="alert('Successfully added');">-->
-                <form method="post" action="editRecipe.php?param=<?php echo $URL_name; ?>">
+<!--            The form to edit the selected recipe-->
+<!--            In the input field we show the stored data of the selected recipe-->
+            <form method="post" action="editRecipe.php?param=<?php echo $URL_name; ?>">
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" placeholder="Name of the recipe" name="name" value="<?=$row["recipe_name"]?>" required>
@@ -65,16 +74,18 @@ if(isset($_POST['Update'])){ //új recept felvétele
                 <div class="form-group">
                     <label for="category">Category:</label>
                     <?php
-
+                    // Include config file
                     require_once 'config.php';
                     $result = $link->query("select * from category");
-
+                    // Get all the categories from the database
                     echo "<select class='form-control' id='category_id' name='category_id'>";
 
+                    // Show the categories as a drop-down list
                     while ($row = $result->fetch_assoc()) {
                         unset($id, $name);
                         $id = $row['id'];
                         $name = $row['name'];
+                        // Show the name and store the id of the category
                         echo '<option value="'.$id.'">'.$name.'</option>';
                     }
 

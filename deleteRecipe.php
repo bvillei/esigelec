@@ -26,5 +26,6 @@ if (mysqli_affected_rows($link) == 1) {
     <?php
 }
 
+// After 3 seconds it redirect us to the Recipe list page
 header( "refresh:3;url=listRecipe.php" );
 ?>

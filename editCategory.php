@@ -8,19 +8,27 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     exit;
 }
 
+// Include config file
 require_once 'config.php';
+//Get the name of the category from the URL
 $URL_name = $_GET['param'];
-$category = mysqli_query($link,"SELECT name FROM category WHERE name='".$URL_name."'"); //kiválsztott recept
+// Get the category which name is in the URL
+$category = mysqli_query($link,"SELECT name FROM category WHERE name='".$URL_name."'");
 $row = mysqli_fetch_array($category);
 
+// Update the selected category
 if(isset($_POST['Update'])){ //új recept felvétele
 
 // Include config file
     require_once 'config.php';
+// Get the data from the form
     $name = mysqli_real_escape_string($link,$_POST['name']);
-    $query = "UPDATE category SET name='$name' WHERE name='$URL_name'"; //beszúrás a receptek közé
+// Edit the selected category name with an UPDATE query
+    $query = "UPDATE category SET name='$name' WHERE name='$URL_name'";
     mysqli_query($link, $query);
+// Close the connection
     mysqli_close($link);
+// Navigate to the list page of categories
     header("Location: listCategory.php");
 }
 ?>
@@ -28,8 +36,7 @@ if(isset($_POST['Update'])){ //új recept felvétele
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Update Recipe</title>
-
+    <title>Update Category</title>
     <?php include('head.php'); ?>
 </head>
 <body>
@@ -44,12 +51,13 @@ if(isset($_POST['Update'])){ //új recept felvétele
 
         <div class="col-sm-6 text-left">
 
-            <h2>Update the Recipe</h2>
+            <h2>Update the Category</h2>
 
-            <!--            <form method="post" action="editRecip.php" onsubmit="alert('Successfully added');">-->
+<!--            The form to edit the selected category -->
             <form method="post" action="editCategory.php?param=<?php echo $URL_name; ?>">
                 <div class="form-group">
                     <label for="name">Category:</label>
+<!--                    In the input field we show the stored name of the selected category-->
                     <input type="text" class="form-control" id="name" placeholder="Give a Category name" name="name" value="<?=$row["name"]?>" required>
                 </div>
                 <button name="Update" type="submit" value="ok" class="btn btn-primary">Update the Category</button>
