@@ -10,7 +10,11 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 
 // Include config file
 require_once 'config.php';
-$eredmeny = mysqli_query($link,"SELECT name FROM recipe"); //receptek lekérdezése
+$category_name = '%';
+if(isset($_POST['Search'])){  //keresés
+    $category_name = mysqli_real_escape_string($link, $_POST['category_id']);
+}
+$eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE category.name LIKE '$category_name' "); //receptek lekérdezése
 ?>
 
 <!DOCTYPE html>
@@ -32,9 +36,36 @@ $eredmeny = mysqli_query($link,"SELECT name FROM recipe"); //receptek lekérdez�
         <div class="col-sm-5 text-left">
 
             <h1>List of Recipes that you wish to edit:</h1>
+
+            <form method="post" action="listRecipe.php">
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <?php
+
+                    require_once 'config.php';
+                    $result = $link->query("select * from category");
+
+                    echo "<select class='form-control' id='category_id' name='category_id'>";
+
+                    echo "<option value='%'>ALL</option>";
+
+                    while ($row = $result->fetch_assoc()) {
+                        unset($id, $name);
+//                        $id = $row['id'];
+                        $name = $row['name'];
+                        echo '<option value="'.$name.'">'.$name.'</option>';
+                    }
+                    echo "</select>";
+                    ?>
+                </div>
+                <button name="Search" type="submit" value="ok" class="btn btn-primary">Search</button>
+            </form>
+
+            <br/>
+
             <?php while($sor = mysqli_fetch_array($eredmeny)): ?>
                 <ul class="list-group">
-                    <a href="showRecipe.php?param=<?=$sor['name']?>"><li class="list-group-item list-group-item-action"><?=$sor['name']?></li></a>
+                    <a href="showRecipe.php?param=<?=$sor['recipe_name']?>"><li class="list-group-item list-group-item-action"><?=$sor['recipe_name']?></li></a>
                 </ul>
             <?php endwhile; ?>
             <?php
