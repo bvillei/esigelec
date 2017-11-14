@@ -47,11 +47,10 @@ $eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, 
 
                     echo "<select class='form-control' id='category_id' name='category_id'>";
 
-                    echo "<option value='%'>ALL</option>";
+                    echo "<option value='%'>ALL RECIPE</option>";
 
                     while ($row = $result->fetch_assoc()) {
-                        unset($id, $name);
-//                        $id = $row['id'];
+                        unset($name);
                         $name = $row['name'];
                         echo '<option value="'.$name.'">'.$name.'</option>';
                     }
@@ -72,7 +71,7 @@ $eredmeny = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, 
             mysqli_close($link);
             ?>
 
-            <a href="editRecipe.php"><button type="button" class="btn btn-primary">Add New Recipe</button></a>
+            <a href="addRecipe.php"><button type="button" class="btn btn-primary">Add New Recipe</button></a>
 
         </div>
     </div>

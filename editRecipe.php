@@ -8,16 +8,19 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     exit;
 }
 
-if(isset($_POST['Add'])){ //új recept felvétele
+require_once 'config.php';
+$URL_name = $_GET['param'];
+$recipe = mysqli_query($link,"SELECT recipe.name AS recipe_name, ingredients, description, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE recipe.name='".$URL_name."'"); //kiválsztott recept
+$row = mysqli_fetch_array($recipe);
+
+if(isset($_POST['Update'])){ //új recept felvétele
 
 // Include config file
     require_once 'config.php';
     $name = mysqli_real_escape_string($link,$_POST['name']);
     $ingredients = mysqli_real_escape_string($link,$_POST['ingredients']);
     $description = mysqli_real_escape_string($link,$_POST['description']);
-    $category_id = mysqli_real_escape_string($link,$_POST['category_id']);
-    $user_id = $_SESSION['id'];
-    $query = "INSERT INTO recipe (name, ingredients, description, category_id, user_id)" . "values ('$name','$ingredients','$description','$category_id','$user_id')"; //beszúrás a receptek közé
+    $category_id = mysqli_real_escape_string($link,$_POST['category_id']);$query = "UPDATE recipe SET name='$name', ingredients='$ingredients', description='$description' WHERE name='$URL_name'"; //beszúrás a receptek közé
     mysqli_query($link, $query);
     mysqli_close($link);
     header("Location: listRecipe.php");
@@ -27,7 +30,7 @@ if(isset($_POST['Add'])){ //új recept felvétele
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Recipe Edit</title>
+    <title>Update Recipe</title>
 
     <?php include('head.php'); ?>
 </head>
@@ -43,41 +46,43 @@ if(isset($_POST['Add'])){ //új recept felvétele
 
         <div class="col-sm-6 text-left">
 
-                <h2>Edit the Recipe</h2>
-                <form method="post" action="editRecipe.php" onsubmit="alert('Successfully added');">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" placeholder="Name of the recipe" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ingredients">Ingredients:</label>
-                        <input type="text" class="form-control" id="ingredients" placeholder="Give the ingredients of the recipe" name="ingredients">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <textarea class="form-control" rows="5" id="description" placeholder="Give the description of the recipe" name="description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Category:</label>
-                        <?php
+            <h2>Update the Recipe</h2>
 
-                        require_once 'config.php';
-                        $result = $link->query("select * from category");
+<!--            <form method="post" action="editRecip.php" onsubmit="alert('Successfully added');">-->
+                <form method="post" action="editRecipe.php?param=<?php echo $URL_name; ?>">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" placeholder="Name of the recipe" name="name" value="<?=$row["recipe_name"]?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredients:</label>
+                    <input type="text" class="form-control" id="ingredients" placeholder="Give the ingredients of the recipe" name="ingredients" value="<?=$row["ingredients"]?>">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input class="form-control" id="description" placeholder="Give the description of the recipe" name="description" value="<?=$row["description"]?>">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <?php
 
-                        echo "<select class='form-control' id='category_id' name='category_id'>";
+                    require_once 'config.php';
+                    $result = $link->query("select * from category");
 
-                        while ($row = $result->fetch_assoc()) {
-                            unset($id, $name);
-                            $id = $row['id'];
-                            $name = $row['name'];
-                            echo '<option value="'.$id.'">'.$name.'</option>';
-                        }
+                    echo "<select class='form-control' id='category_id' name='category_id'>";
 
-                        echo "</select>";
-                        ?>
-                    </div>
-                    <button name="Add" type="submit" value="ok" class="btn btn-primary">Add the recipe</button>
-                </form>
+                    while ($row = $result->fetch_assoc()) {
+                        unset($id, $name);
+                        $id = $row['id'];
+                        $name = $row['name'];
+                        echo '<option value="'.$id.'">'.$name.'</option>';
+                    }
+
+                    echo "</select>";
+                    ?>
+                </div>
+                <button name="Update" type="submit" value="ok" class="btn btn-primary">Update the recipe</button>
+            </form>
 
         </div>
     </div>
