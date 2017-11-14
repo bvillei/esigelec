@@ -36,7 +36,11 @@ $username = $_SESSION['username'];
             <?php while($row = mysqli_fetch_array($eredmeny)): ?>
                 <ul class="list-group">
                     <li class="list-group-item justify-content-between">
-                        <?=$row['name']?>
+                        <?php if($_SESSION['admin'] != 1){ ?>
+                            <a href="editCategory.php?param=<?=$row['name']?>"><?=$row['name']?></a>
+                        <?php } else { ?>
+                            <?=$row['name']?>
+                        <?php } ?>
                         <?php if($_SESSION['admin'] != 1){ ?>
                             <span class="badge badge-default badge-pill">
                                 <form action='deleteCategory.php?name="<?php echo $row['name'] ?>"' method="post">
