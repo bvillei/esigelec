@@ -52,7 +52,7 @@ $username = $_SESSION['username'];
             mysqli_close($link);
             ?>
 
-            <a href="editCategory.php"><button type="button" class="btn btn-primary">Add New Category</button></a>
+            <a href="addCategory.php"><button type="button" class="btn btn-primary">Add New Category</button></a>
 
         </div>
     </div>

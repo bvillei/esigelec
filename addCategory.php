@@ -40,7 +40,7 @@ if(isset($_POST['Add'])){ //új recept felvétele
         <div class="col-sm-6 text-left">
 
             <h2>Add New Category</h2>
-            <form method="post" action="editCategory.php" onsubmit="alert('Successfully added');">
+            <form method="post" action="addCategory.php" onsubmit="alert('Successfully added');">
                 <div class="form-group">
                     <label for="name">name:</label>
                     <input type="text" class="form-control" id="name" placeholder="Name of the category" name="name" required>
