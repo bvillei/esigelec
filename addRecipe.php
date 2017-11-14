@@ -18,7 +18,7 @@ if(isset($_POST['Add'])){ //új recept felvétele
     $ingredients = mysqli_real_escape_string($link,$_POST['ingredients']);
     $description = mysqli_real_escape_string($link,$_POST['description']);
     $category_id = mysqli_real_escape_string($link,$_POST['category_id']);
-// Get the user id from the session
+// Get the user id from the session. We will add to the recipe as user_id.
     $user_id = $_SESSION['id'];
 // Add the new recipe to the database
     $query = "INSERT INTO recipe (name, ingredients, description, category_id, user_id)" . "values ('$name','$ingredients','$description','$category_id','$user_id')";
