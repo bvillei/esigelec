@@ -51,11 +51,13 @@ $row = mysqli_fetch_assoc($recipe);
                 <form action='deleteRecipe.php?name="<?php echo $row['recipe_name'] ?>"' method="post">
                     <input type="hidden" name="name" value="<?php echo $row['recipe_name']; ?>">
                     <input type="submit" class="btn btn-danger" name="submit" value="Delete">
+<!--                    Edit button. If we click on the Edit button, then we go to the edit page of the recipe-->
+                    <a class="btn btn-info" href="editRecipe.php?param=<?=$name?>">Edit</li></a>
+<!--                    Cancel button. If we click on the Cancel button, then it navigate us back to the list page-->
+                    <a class="btn btn-warning" href="listRecipe.php">Cancel</li></a>
                 </form>
             </td>
 
-<!--            Edit button. If we click on the Edit button, then we go to the edit page of the recipe-->
-            <a class="btn btn-primary" href="editRecipe.php?param=<?=$name?>">EDIT</li></a>
         </div>
     </div>
 </div>

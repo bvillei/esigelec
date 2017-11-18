@@ -49,7 +49,9 @@ if(isset($_POST['Add'])){
                     <label for="name">name:</label>
                     <input type="text" class="form-control" id="name" placeholder="Name of the category" name="name" required>
                 </div>
-                <button name="Add" type="submit" value="ok" class="btn btn-primary">Add the category</button>
+                <button name="Add" type="submit" value="ok" class="btn btn-success">Save</button>
+<!--                Cancel button. If we click on the Cancel button, then we don't save the recipe, and it navigate us back to the list page-->
+                <a class="btn btn-warning" href="listCategory.php">Cancel</li></a>
             </form>
 
         </div>

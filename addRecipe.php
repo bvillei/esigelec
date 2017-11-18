@@ -74,6 +74,8 @@ if(isset($_POST['Add'])){ //új recept felvétele
 
                         echo "<select class='form-control' id='category_id' name='category_id'>";
 
+                        // set default text which won't be shown in drop-down list
+                        echo "<option selected disabled hidden>Choose here</option>";
                         // Show the categories as a drop-down list
                         while ($row = $result->fetch_assoc()) {
                             unset($id, $name);
@@ -86,7 +88,9 @@ if(isset($_POST['Add'])){ //új recept felvétele
                         echo "</select>";
                         ?>
                     </div>
-                    <button name="Add" type="submit" value="ok" class="btn btn-primary">Add the recipe</button>
+                    <button name="Add" type="submit" value="ok" class="btn btn-success">Save</button>
+<!--                    Cancel button. If we click on the Cancel button, then we don't save the recipe, and it navigate us back to the list page-->
+                    <a class="btn btn-warning" href="listRecipe.php">Cancel</li></a>
                 </form>
 
         </div>

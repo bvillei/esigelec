@@ -60,7 +60,9 @@ if(isset($_POST['Update'])){
 <!--                    In the input field we show the stored name of the selected category-->
                     <input type="text" class="form-control" id="name" placeholder="Give a Category name" name="name" value="<?=$row["name"]?>" required>
                 </div>
-                <button name="Update" type="submit" value="ok" class="btn btn-primary">Update the Category</button>
+                <button name="Update" type="submit" value="ok" class="btn btn-success">Save</button>
+<!--                Cancel button. If we click on the Cancel button, then we don't save the category, and it navigate us back to the list page-->
+                <a class="btn btn-warning" href="listCategory.php">Cancel</li></a>
             </form>
 
         </div>
