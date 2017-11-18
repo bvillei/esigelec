@@ -65,12 +65,13 @@ $query = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, cat
                     echo "</select>";
                     ?>
                 </div>
-                <button name="Search" type="submit" value="ok" class="btn btn-primary">Search</button>
+                <button name="Search" type="submit" value="ok" class="btn btn-info">Search</button>
             </form>
 
             <br/>
 
-            <label for="list">Recipes:</label>
+<!--            We write the category name and "Recipes:", but if we chose the "ALL RECIPE", then we see just "Recipes:" -->
+            <label for="list"><?php if($category_name != '%')echo $category_name ?> Recipes:</label>
 <!--            Write in a list the recipes-->
             <?php while($row = mysqli_fetch_array($query)): ?>
                 <ul class="list-group">
