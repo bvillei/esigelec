@@ -80,6 +80,8 @@ if(isset($_POST['Update'])){
                     // Get all the categories from the database
                     echo "<select class='form-control' id='category_id' name='category_id'>";
 
+                    // set default text which won't be shown in drop-down list
+                    echo "<option selected disabled hidden>Choose here</option>";
                     // Show the categories as a drop-down list
                     while ($row = $result->fetch_assoc()) {
                         unset($id, $name);
