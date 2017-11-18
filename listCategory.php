@@ -38,14 +38,14 @@ $username = $_SESSION['username'];
                 <ul class="list-group">
                     <li class="list-group-item justify-content-between">
 <!--                        If we have admin role, then we can click on the categories, and go to the edit page of the category-->
-                        <?php if($_SESSION['admin'] != 1){ ?>
+                        <?php if($_SESSION['admin'] == 1){ ?>
                             <a href="editCategory.php?param=<?=$row['name']?>"><?=$row['name']?></a>
 <!--                            If we are not admin, then we can't click on the categories, and we can't edit just see the categories-->
                         <?php } else { ?>
                             <?=$row['name']?>
                         <?php } ?>
 <!--                        If we have admin role, then we can see a delete button. If we click on it, then we delete the category.-->
-                        <?php if($_SESSION['admin'] != 1){ ?>
+                        <?php if($_SESSION['admin'] == 1){ ?>
                             <span class="badge badge-default badge-pill">
                                 <form action='deleteCategory.php?name="<?php echo $row['name'] ?>"' method="post">
                                     <input type="hidden" name="name" value="<?php echo $row['name']; ?>">
