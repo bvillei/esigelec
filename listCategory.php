@@ -12,7 +12,12 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 require_once 'config.php';
 // Get all the category
 $query = mysqli_query($link,"SELECT name FROM category");
+// Catch errors
+if(!$query) {printf("Errormessage: %s\n", $link->error);}
+// Getting username from the login session
 $username = $_SESSION['username'];
+// Close the connection
+mysqli_close($link);
 ?>
 
 <!DOCTYPE html>

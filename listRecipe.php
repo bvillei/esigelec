@@ -19,6 +19,8 @@ if(isset($_POST['Search'])){
 }
 // We get the recipes with the searched category
 $query = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE category.name LIKE '$category_name' ");
+// Catch errors
+if(!$query) {printf("Errormessage: %s\n", $link->error);}
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +52,10 @@ $query = mysqli_query($link,"SELECT recipe.name AS recipe_name, category_id, cat
                     require_once 'config.php';
                     // Get all the categories from the database
                     $result = $link->query("select * from category");
+                    // Catch errors
+                    if(!$result) {printf("Errormessage: %s\n", $link->error);}
 
+                    // Get all the categories from the database
                     echo "<select class='form-control' id='category_id' name='category_id'>";
 
                     // ALL RECIPE category, if we want to change back to all the recipes. (We do a search with a '%' operator)

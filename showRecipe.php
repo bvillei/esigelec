@@ -14,8 +14,11 @@ require_once 'config.php';
 $name = $_GET['param'];
 // get the recipe that has the name field corresponding to the parameter which one stored in the URL
 $recipe = mysqli_query($link,"SELECT recipe.name AS recipe_name, ingredients, description, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE recipe.name='".$name."'");
+// Catch errors
+if(!$recipe) {printf("Errormessage: %s\n", $link->error);}
 $row = mysqli_fetch_assoc($recipe);
-
+// Close the connection
+mysqli_close($link);
 ?>
 
 <!DOCTYPE html>

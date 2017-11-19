@@ -14,6 +14,8 @@ require_once 'config.php';
 $URL_name = $_GET['param'];
 // Get the category which name is in the URL
 $category = mysqli_query($link,"SELECT name FROM category WHERE name='".$URL_name."'");
+// Catch errors
+if(!$category) {printf("Errormessage: %s\n", $link->error);}
 $row = mysqli_fetch_array($category);
 
 // Edit the selected category
@@ -25,7 +27,9 @@ if(isset($_POST['Update'])){
     $name = mysqli_real_escape_string($link,$_POST['name']);
 // Edit the selected category name with an UPDATE query
     $query = "UPDATE category SET name='$name' WHERE name='$URL_name'";
-    mysqli_query($link, $query);
+    $res = mysqli_query($link, $query);
+// Catch errors
+    if(!$res) {printf("Errormessage: %s\n", $link->error);}
 // Close the connection
     mysqli_close($link);
 // Navigate to the list page of categories

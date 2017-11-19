@@ -7,7 +7,10 @@ $name = $_POST['name'];
 $query = "DELETE FROM recipe WHERE name='".$name."' LIMIT 1";
 
 //sends the query to delete the entry
-mysqli_query ($link, $query);
+$res = mysqli_query ($link, $query);
+
+// Catch errors
+if(!$res) {printf("Errormessage: %s\n", $link->error);}
 
 if (mysqli_affected_rows($link) == 1) {
 //if it updated

@@ -8,8 +8,14 @@ define('DB_NAME', 'project');
 
 /* Attempt to connect to MySQL database */
 
-//error_reporting(0); //extra security
-$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Connection error");
+// Extra security. In any problem it will not give back the roots of the file, just a blank page.
+error_reporting(0);
+$link = mysqli_connect(
+    DB_SERVER,
+    DB_USERNAME,
+    DB_PASSWORD,
+    DB_NAME)
+or die("Connection error");
 
 // Check connection
 if($link === false){

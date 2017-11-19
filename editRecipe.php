@@ -14,6 +14,8 @@ require_once 'config.php';
 $URL_name = $_GET['param'];
 // Get the recipe which name is in the URL
 $recipe = mysqli_query($link,"SELECT recipe.name AS recipe_name, ingredients, description, category.name AS category_name FROM recipe JOIN category ON category.id = recipe.category_id WHERE recipe.name='".$URL_name."'");
+// Catch errors
+if(!$recipe) {printf("Errormessage: %s\n", $link->error);}
 $row = mysqli_fetch_array($recipe);
 
 // Edit the selected recipe
@@ -27,8 +29,10 @@ if(isset($_POST['Update'])){
     $description = mysqli_real_escape_string($link,$_POST['description']);
     $category_id = mysqli_real_escape_string($link,$_POST['category_id']);
 // Edit the selected recipe data with an UPDATE query
-    $query = "UPDATE recipe SET name='$name', ingredients='$ingredients', description='$description' WHERE name='$URL_name'";
-    mysqli_query($link, $query);
+    $query = "UPDATE recipe SET name='$name', ingredients='$ingredients', description='$description', category_id='$category_id' WHERE name='$URL_name'";
+    $res = mysqli_query($link, $query);
+// Catch errors
+    if(!$res) {printf("Errormessage: %s\n", $link->error);}
 // Close the connection
     mysqli_close($link);
 // Navigate to the list page of recipes
@@ -77,8 +81,11 @@ if(isset($_POST['Update'])){
                     // Include config file
                     require_once 'config.php';
                     $result = $link->query("select * from category");
+                    // Catch errors
+                    if(!$result) {printf("Errormessage: %s\n", $link->error);}
+
                     // Get all the categories from the database
-                    echo "<select class='form-control' id='category_id' name='category_id'>";
+                    echo "<select class='form-control' id='category_id' name='category_id' required>";
 
                     // set default text which won't be shown in drop-down list
                     echo "<option selected disabled hidden>Choose here</option>";

@@ -22,7 +22,9 @@ if(isset($_POST['Add'])){ //új recept felvétele
     $user_id = $_SESSION['id'];
 // Add the new recipe to the database
     $query = "INSERT INTO recipe (name, ingredients, description, category_id, user_id)" . "values ('$name','$ingredients','$description','$category_id','$user_id')";
-    mysqli_query($link, $query);
+    $res = mysqli_query($link, $query);
+// Catch errors
+    if(!$res) {printf("Errormessage: %s\n", $link->error);}
 // Close the connection
     mysqli_close($link);
 // Navigate to the list page of recipes
@@ -51,7 +53,7 @@ if(isset($_POST['Add'])){ //új recept felvétele
 
                 <h2>Add new Recipe</h2>
 <!--            The form to add new recipe -->
-                <form method="post" action="addRecipe.php" onsubmit="alert('Successfully added');">
+                <form method="post" action="addRecipe.php">
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" class="form-control" id="name" placeholder="Name of the recipe" name="name" required>
@@ -71,8 +73,11 @@ if(isset($_POST['Add'])){ //új recept felvétele
                         require_once 'config.php';
                         // Get all the categories from the database
                         $result = $link->query("select * from category");
+                        // Catch errors
+                        if(!$result) {printf("Errormessage: %s\n", $link->error);}
 
-                        echo "<select class='form-control' id='category_id' name='category_id'>";
+
+                        echo "<select class='form-control' id='category_id' name='category_id' required>";
 
                         // set default text which won't be shown in drop-down list
                         echo "<option selected disabled hidden>Choose here</option>";

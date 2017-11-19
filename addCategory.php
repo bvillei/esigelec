@@ -16,7 +16,9 @@ if(isset($_POST['Add'])){
     $name = mysqli_real_escape_string($link,$_POST['name']);
 // Add the new category to the database
     $query = "INSERT INTO category (name)" . "values ('$name')";
-    mysqli_query($link, $query);
+    $res = mysqli_query($link, $query);
+// Catch errors
+    if(!$res) {printf("Errormessage: %s\n", $link->error);}
 // Close the connection
     mysqli_close($link);
 // Navigate to the list page of categories
